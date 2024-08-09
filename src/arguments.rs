@@ -20,6 +20,7 @@ pub(crate) struct Arguments {
     /// Enables color
     #[arg(long, short)]
     pub color: bool,
+    /// Output table style, see https://docs.rs/tabled/latest/tabled/settings/style/struct.Style.html
     #[arg(long, short, value_enum, default_value_t = Style::Modern)]
     pub style: Style,
 }
