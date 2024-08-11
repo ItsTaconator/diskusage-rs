@@ -9,6 +9,6 @@ Basic CLI disk usage program for Linux. By default, it shows the **Mountpoint**,
 - `-c, --color`: Enables color
 - `-s, style`: Changes the style of the output table. Possible values include `ascii`, `ascii-rounded`, `blank`, `dots`, `empty`, `extended`, `markdown`, `modern` (default), `modern-rounded`, `psql`, `re-structured-text`, and `sharp`.
 - `-h, --help`: Shows help
-- -`v, --version`: Print version
+- `-v, --version`: Print version
 
 These can be combined like `-doc` and you can even do combinations like `-docsascii`.
