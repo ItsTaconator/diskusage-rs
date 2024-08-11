@@ -1,6 +1,6 @@
 use clap::ValueEnum;
 
-#[derive(Clone, ValueEnum, Copy, Debug)]
+#[derive(Clone, ValueEnum, Debug)]
 pub(crate) enum Style {
     Ascii,
     AsciiRounded,
