@@ -2,6 +2,7 @@
 Basic CLI disk usage program for Linux. By default, it shows the **Mountpoint**, **Total**, **Used**, and **Free** space with no colors. You can enable color with `-c, --color`. Additionally, you can show filesystem types with `--fs`, block devices with `-d, --devices`, UUIDs with `--uuid`, and mountoptions with `-o, --mountoptions`. You can also change the style for the output table with `-s, --style`.
 
 ## Arguments
+- `--boot`: Shows `/boot` partition
 - `--fs`: Shows filesystems
 - `-d, --devices`: Shows block devices
 - `--uuid`: Shows partition UUIDs
