@@ -37,6 +37,10 @@ fn main() {
     let mut builder = Builder::default();
     for disk in disks.list() {
         let mountpoint = disk.mount_point().to_str().unwrap().to_string();
+        if !args.boot && mountpoint == "/boot" {
+            continue;
+        }
+
         let total_space = ByteSize(disk.total_space()).to_string();
         let free_space = ByteSize(disk.available_space()).to_string();
         let used_space = ByteSize(disk.total_space() - disk.available_space()).to_string();

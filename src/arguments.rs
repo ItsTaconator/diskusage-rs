@@ -23,4 +23,7 @@ pub(crate) struct Arguments {
     /// Output table style, see https://docs.rs/tabled/latest/tabled/settings/style/struct.Style.html
     #[arg(long, short, value_enum, default_value_t = Style::Modern)]
     pub style: Style,
+    /// Show /boot partition
+    #[arg(long)]
+    pub boot: bool,
 }
