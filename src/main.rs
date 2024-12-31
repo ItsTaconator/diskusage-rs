@@ -74,7 +74,7 @@ fn main() {
                         .fs_mntops
                         .iter()
                         .map(|m| {
-                            if *m.1 == None {
+                            if m.1.is_none() {
                                 m.0.clone()
                             } else {
                                 format!("{}={}", *m.0, m.1.clone().unwrap())
