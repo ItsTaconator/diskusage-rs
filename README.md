@@ -8,8 +8,10 @@ Basic CLI disk usage program for Linux. By default, it shows the **Mountpoint**,
 - `--uuid`: Shows partition UUIDs
 - `-o, --mountoptions`: Shows mount options
 - `-c, --color`: Enables color
-- `-s, style`: Changes the style of the output table. Possible values include `ascii`, `ascii-rounded`, `blank`, `dots`, `empty`, `extended`, `markdown`, `modern` (default), `modern-rounded`, `psql`, `re-structured-text`, and `sharp`.
+- `--style`: Changes the style of the output table. Possible values include `ascii`, `ascii-rounded`, `blank`, `dots`, `empty`, `extended`, `markdown`, `modern` (default), `modern-rounded`, `psql`, `re-structured-text`, and `sharp`.
 - `-h, --help`: Shows help
 - `-v, --version`: Print version
+- `-b, --bar`: Show disk usage as a bar
+- `-s, --segments`: How many segments the bar should have. Only applies if `--bar` is set
 
 These can be combined like `-doc` and you can even do combinations like `-docsascii`.
