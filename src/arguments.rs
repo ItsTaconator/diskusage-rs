@@ -16,8 +16,7 @@ pub(crate) struct Arguments {
     pub uuid: bool,
     /// Shows mount options
     #[arg(long, short = 'o')]
-    pub mountoptions: bool,
-    /// Enables color
+    pub mount_options: bool,
     #[arg(long, short)]
     pub color: bool,
     /// Output table style, see https://docs.rs/tabled/latest/tabled/settings/style/struct.Style.html

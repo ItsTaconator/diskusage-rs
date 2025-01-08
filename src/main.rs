@@ -68,7 +68,7 @@ fn main() {
             }
         }
 
-        if args.mountoptions {
+        if args.mount_options {
             for mount in &mounts {
                 if mount.fs_file == mountpoint {
                     let mut result = mount
@@ -136,7 +136,7 @@ fn main() {
         i += 1;
     }
 
-    if args.mountoptions {
+    if args.mount_options {
         columns.insert(i, "Mount Options");
         // i += 1;
     }
