@@ -94,7 +94,7 @@ fn main() {
             output.push(
                 format!(
                     "{}{} {:.1}%, {}/{}{RESET}",
-                    if low { RED } else { "" },
+                    if args.color && low { RED } else { "" },
                     bar::generate(percent_full as u64, args.segments),
                     percent_full,
                     used_space,
