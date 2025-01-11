@@ -6,13 +6,13 @@ use crate::style::Style;
 #[command(version, about, long_about = None)]
 pub(crate) struct Arguments {
     /// Shows filesystems
-    #[arg(long)]
+    #[arg(long, short)]
     pub fs: bool,
     /// Shows block devices
     #[arg(long, short)]
     pub devices: bool,
     /// Shows partition UUIDs
-    #[arg(long)]
+    #[arg(long, short)]
     pub uuid: bool,
     /// Shows mount options
     #[arg(long, short = 'o')]
