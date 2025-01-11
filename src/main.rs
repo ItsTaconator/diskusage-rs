@@ -65,6 +65,8 @@ fn main() {
             let uuid = uuid_map.get(&device);
             if let Some(uuid) = uuid {
                 output.push(uuid.to_string());
+            } else {
+                output.push(String::from("Failed to get"))
             }
         }
 
