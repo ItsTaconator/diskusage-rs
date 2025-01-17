@@ -30,6 +30,6 @@ pub(crate) struct Arguments {
     #[arg(long, short)]
     pub bar: bool,
     /// How many segments the disk usage bar should have
-    #[arg(long, short, default_value_t = 10)]
+    #[arg(long, short, default_value_t = 0)]
     pub segments: u8,
 }

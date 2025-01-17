@@ -15,7 +15,12 @@ const RED: &str = "\x1b[31m";
 const BOLD: &str = "\x1b[1m";
 
 fn main() {
-    let args = Arguments::parse();
+    let mut args = Arguments::parse();
+
+    if args.segments == 0 {
+        let (cols, _) = termion::terminal_size().unwrap();
+        args.segments = (cols / 4) as u8;
+    }
 
     let mut uuid_map = HashMap::new();
 
