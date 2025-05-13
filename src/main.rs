@@ -47,7 +47,7 @@ fn main() {
     let mut builder = Builder::default();
     for disk in disks.list() {
         let mountpoint = disk.mount_point().to_str().unwrap().to_string();
-        if !args.boot && mountpoint == "/boot" {
+        if !args.boot && mountpoint.starts_with("/boot") {
             continue;
         }
 
