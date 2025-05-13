@@ -12,6 +12,8 @@ tabled = { version = "0.17.0", features = ["ansi"] }
 termion = "4.0.3"
 
 [profile.release]
+incremental = true
 codegen-units = 1
 lto = "fat"
 strip = true
+panic = "abort"
