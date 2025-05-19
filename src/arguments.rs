@@ -11,12 +11,15 @@ pub(crate) struct Arguments {
     pub fs: bool,
     /// Shows block devices
     #[arg(long, short)]
+    #[cfg(unix)]
     pub devices: bool,
     /// Shows partition UUIDs
     #[arg(long, short)]
+    #[cfg(unix)]
     pub uuid: bool,
     /// Shows mount options
     #[arg(long, short = 'o')]
+    #[cfg(unix)]
     pub mount_options: bool,
     #[arg(long, short)]
     pub color: bool,

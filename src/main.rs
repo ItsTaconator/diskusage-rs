@@ -2,6 +2,7 @@ mod arguments;
 mod style;
 mod bar;
 
+#[cfg(unix)]
 use std::{collections::HashMap, fs};
 
 use arguments::Arguments;
@@ -25,8 +26,10 @@ fn main() {
         }
     }
 
+    #[cfg(unix)]
     let mut uuid_map = HashMap::new();
 
+    #[cfg(unix)]
     for uuid in fs::read_dir("/dev/disk/by-uuid/").unwrap() {
         let uuid = uuid.unwrap();
         let actual_path = fs::read_link(uuid.path()).unwrap();
@@ -40,6 +43,7 @@ fn main() {
         );
     }
 
+    #[cfg(unix)]
     let mounts = procfs::mounts().unwrap();
 
     let disks = sysinfo::Disks::new_with_refreshed_list();
@@ -53,7 +57,10 @@ fn main() {
         let total_space = ByteSize(disk.total_space()).to_string();
         let free_space = ByteSize(disk.available_space()).to_string();
         let used_space = ByteSize(disk.total_space() - disk.available_space()).to_string();
+
+        #[cfg(unix)]
         let device = disk.name().to_str().unwrap().to_owned();
+
         let filesystem = disk.file_system().to_str().unwrap().to_owned();
 
         let low = (disk.total_space() as f32 * 0.10) > disk.available_space() as f32;
@@ -61,40 +68,44 @@ fn main() {
         let mut output = Vec::<String>::with_capacity(4);
 
         output.push(mountpoint.clone());
-        if args.devices {
-            output.push(device.clone());
-        }
 
         if args.fs {
             output.push(filesystem);
         }
 
-        if args.uuid {
-            let uuid = uuid_map.get(&device);
-            if let Some(uuid) = uuid {
-                output.push(uuid.to_string());
-            } else {
-                output.push(String::from("Failed to get"))
+        #[cfg(unix)]
+        {
+            if args.devices {
+                output.push(device.clone());
             }
-        }
 
-        if args.mount_options {
-            for mount in &mounts {
-                if mount.fs_file == mountpoint {
-                    let mut result = mount
-                        .fs_mntops
-                        .iter()
-                        .map(|m| {
-                            if m.1.is_none() {
-                                m.0.clone()
-                            } else {
-                                format!("{}={}", *m.0, m.1.clone().unwrap())
-                            }
-                        })
-                        .collect::<Vec<String>>();
+            if args.uuid {
+                let uuid = uuid_map.get(&device);
+                if let Some(uuid) = uuid {
+                    output.push(uuid.to_string());
+                } else {
+                    output.push(String::from("Failed to get"))
+                }
+            }
 
-                    result.sort();
-                    output.push(result.join(","));
+            if args.mount_options {
+                for mount in &mounts {
+                    if mount.fs_file == mountpoint {
+                        let mut result = mount
+                            .fs_mntops
+                            .iter()
+                            .map(|m| {
+                                if m.1.is_none() {
+                                    m.0.clone()
+                                } else {
+                                    format!("{}={}", *m.0, m.1.clone().unwrap())
+                                }
+                            })
+                            .collect::<Vec<String>>();
+
+                        result.sort();
+                        output.push(result.join(","));
+                    }
                 }
             }
         }
@@ -131,25 +142,29 @@ fn main() {
     };
 
     let mut i = 1;
-    if args.devices {
-        columns.insert(i, "Device");
-        i += 1;
-    }
 
+    #[allow(unused_assignments)]
     if args.fs {
         columns.insert(i, "Filesystem");
         i += 1;
     }
 
-    if args.uuid {
-        columns.insert(i, "UUID");
-        i += 1;
-    }
+    #[cfg(unix)]
+    {
+        if args.devices {
+            columns.insert(i, "Device");
+            i += 1;
+        }
 
-    if args.mount_options {
-        columns.insert(i, "Mount Options");
-        // i += 1;
-    }
+        if args.uuid {
+            columns.insert(i, "UUID");
+            i += 1;
+        }
+
+        if args.mount_options {
+            columns.insert(i, "Mount Options");
+        }
+    };
 
     let columns = if args.color {
         columns
