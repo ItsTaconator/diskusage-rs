@@ -18,8 +18,7 @@ fn main() {
     let mut args = Arguments::parse();
 
     if args.segments == 0 {
-
-        if let Ok((cols, _)) = termion::terminal_size() {
+        if let Ok((cols, _)) = crossterm::terminal::size() {
             args.segments = (cols / 4) as u8;
         } else {
             args.segments = 25u8;

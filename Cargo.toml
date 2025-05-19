@@ -6,14 +6,17 @@ edition = "2021"
 [dependencies]
 bytesize = "2.0.1"
 clap = { version = "4.5.38", features = ["derive"] }
-procfs = "0.17.0"
+crossterm = "0.29.0"
 sysinfo = "0.35.1"
 tabled = { version = "0.19.0", features = ["ansi"] }
-termion = "4.0.5"
+
+
+[target.'cfg(unix)'.dependencies]
+procfs = "0.17.0"
 
 [profile.release]
 incremental = true
 codegen-units = 1
-lto = "fat"
+lto = true
 strip = true
 panic = "abort"
