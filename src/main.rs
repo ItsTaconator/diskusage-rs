@@ -1,6 +1,8 @@
 mod arguments;
 mod style;
 mod bar;
+#[cfg(windows)]
+mod windows;
 
 #[cfg(unix)]
 use std::{collections::HashMap, fs};
@@ -16,6 +18,12 @@ const RED: &str = "\x1b[31m";
 const BOLD: &str = "\x1b[1m";
 
 fn main() {
+    // Enable virtual terminal processing on Windows
+    #[cfg(windows)]
+    unsafe {
+        windows::enable_vt_processing();
+    }
+
     let mut args = Arguments::parse();
 
     if args.segments == 0 {
@@ -196,4 +204,10 @@ fn main() {
             style::Style::Sharp => table.with(Style::sharp()),
         }
     );
+
+    // Restore previous console mode on Windows
+    #[cfg(windows)]
+    unsafe {
+        windows::restore_console_mode();
+    }
 }
