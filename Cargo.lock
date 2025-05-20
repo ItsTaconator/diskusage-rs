@@ -283,7 +283,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "disk-usage"
+name = "diskusage"
 version = "1.0.0"
 dependencies = [
  "bytesize",
