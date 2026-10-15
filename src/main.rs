@@ -111,17 +111,18 @@ fn main() {
         }
 
         if args.bar {
-            let percent_full = ((disk.total_space() as f64 - disk.available_space() as f64) / disk.total_space() as f64) * 100f64;
-            output.push(
-                format!(
-                    "{}{} {:.1}%, {}/{}{RESET}",
-                    if args.color && low { RED } else { "" },
-                    bar::generate(percent_full.round() as u64, args.segments),
-                    percent_full,
-                    used_space,
-                    total_space
-                )
-            );
+            let percent_full = ((disk.total_space() as f64 - disk.available_space() as f64)
+                / disk.total_space() as f64)
+                * 100f64;
+            output.push(format!(
+                "{}{} {:.1}%, {}/{}{}",
+                if args.color && low { RED } else { "" },
+                bar::generate(percent_full.round() as u64, args.segments),
+                percent_full,
+                used_space,
+                total_space,
+                if args.color { RESET } else { "" }
+            ));
         } else {
             output.push(total_space);
             output.push(used_space);
