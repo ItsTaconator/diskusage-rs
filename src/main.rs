@@ -70,27 +70,42 @@ fn main() {
         }
 
         #[cfg(unix)]
-        {
-            if args.devices {
-                output.push(device.clone());
-            }
+        if args.devices {
+            output.push(device.clone());
+        }
 
-            if args.uuid {
-                let uuid = uuid_map.get(&device);
-                if let Some(uuid) = uuid {
-                    output.push(uuid.to_string());
-                } else {
-                    output.push(String::from("Failed to get"))
-                }
+        #[cfg(unix)]
+        if args.uuid {
+            let uuid = uuid_map.get(&device);
+            if let Some(uuid) = uuid {
+                output.push(uuid.to_string());
+            } else {
+                output.push(String::from("Failed to get"))
             }
+        }
 
         if args.kind {
             output.push(kind.to_string());
         }
 
-                        result.sort();
-                        output.push(result.join(","));
-                    }
+        #[cfg(unix)]
+        if args.mount_options {
+            for mount in &mounts {
+                if mount.fs_file == mountpoint {
+                    let mut result = mount
+                        .fs_mntops
+                        .iter()
+                        .map(|m| {
+                            if m.1.is_none() {
+                                m.0.clone()
+                            } else {
+                                format!("{}={}", *m.0, m.1.clone().unwrap())
+                            }
+                        })
+                        .collect::<Vec<String>>();
+
+                    result.sort();
+                    output.push(result.join(","));
                 }
             }
         }
