@@ -35,21 +35,7 @@ fn main() {
     }
 
     #[cfg(unix)]
-    let mut uuid_map = HashMap::new();
-
-    #[cfg(unix)]
-    for uuid in fs::read_dir("/dev/disk/by-uuid/").unwrap() {
-        let uuid = uuid.unwrap();
-        let actual_path = fs::read_link(uuid.path()).unwrap();
-        uuid_map.insert(
-            actual_path
-                .to_str()
-                .unwrap()
-                .replace("../../", "/dev/")
-                .to_owned(),
-            uuid.file_name().into_string().unwrap(),
-        );
-    }
+    let uuid_map = get_uuids();
 
     #[cfg(unix)]
     let mounts = procfs::mounts().unwrap();
