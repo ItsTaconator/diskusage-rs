@@ -193,3 +193,22 @@ fn main() {
         windows::restore_console_mode();
     }
 }
+
+#[cfg(unix)]
+fn get_uuids() -> HashMap<String, String> {
+    let mut out: HashMap<String, String> = HashMap::new();
+    for uuid in fs::read_dir("/dev/disk/by-uuid/").unwrap() {
+        let uuid = uuid.unwrap();
+        let actual_path = fs::read_link(uuid.path()).unwrap();
+        out.insert(
+            actual_path
+                .to_str()
+                .unwrap()
+                .replace("../../", "/dev/")
+                .to_owned(),
+            uuid.file_name().into_string().unwrap(),
+        );
+    }
+
+    out
+}
