@@ -35,6 +35,9 @@ pub(crate) struct Arguments {
     /// Display type of disk (SSD or HDD)
     #[arg(long="type", short = 't')]
     pub kind: bool,
+    /// Show mounts with no storage space (Docker, running AppImages, etc.)
+    #[arg(long="empty", short = 'e')]
+    pub show_empty: bool,
     /// How many segments the disk usage bar should have
     #[arg(long, short, default_value_t = 0)]
     pub segments: u8,

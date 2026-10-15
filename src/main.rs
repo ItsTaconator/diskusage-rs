@@ -52,6 +52,10 @@ fn main() {
         let free_space = ByteSize(disk.available_space()).to_string();
         let used_space = ByteSize(disk.total_space() - disk.available_space()).to_string();
 
+        if !args.show_empty && disk.total_space() == 0 {
+            continue;
+        }
+
         #[cfg(unix)]
         let device = disk.name().to_str().unwrap().to_owned();
 
