@@ -32,6 +32,9 @@ pub(crate) struct Arguments {
     /// Shows disk usage as a bar along with values
     #[arg(long, short)]
     pub bar: bool,
+    /// Display type of disk (SSD or HDD)
+    #[arg(long="type", short = 't')]
+    pub kind: bool,
     /// How many segments the disk usage bar should have
     #[arg(long, short, default_value_t = 0)]
     pub segments: u8,

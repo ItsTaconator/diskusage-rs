@@ -59,6 +59,8 @@ fn main() {
 
         let low = (disk.total_space() as f32 * 0.10) > disk.available_space() as f32;
 
+        let kind = disk.kind();
+
         let mut output = Vec::<String>::with_capacity(4);
 
         output.push(mountpoint.clone());
@@ -82,20 +84,9 @@ fn main() {
                 }
             }
 
-            if args.mount_options {
-                for mount in &mounts {
-                    if mount.fs_file == mountpoint {
-                        let mut result = mount
-                            .fs_mntops
-                            .iter()
-                            .map(|m| {
-                                if m.1.is_none() {
-                                    m.0.clone()
-                                } else {
-                                    format!("{}={}", *m.0, m.1.clone().unwrap())
-                                }
-                            })
-                            .collect::<Vec<String>>();
+        if args.kind {
+            output.push(kind.to_string());
+        }
 
                         result.sort();
                         output.push(result.join(","));
@@ -152,6 +143,11 @@ fn main() {
 
         if args.uuid {
             columns.insert(i, "UUID");
+            i += 1;
+        }
+
+        if args.kind {
+            columns.insert(i, "Kind");
             i += 1;
         }
 
