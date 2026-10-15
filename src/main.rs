@@ -1,6 +1,6 @@
 mod arguments;
-mod style;
 mod bar;
+mod style;
 #[cfg(windows)]
 mod windows;
 
