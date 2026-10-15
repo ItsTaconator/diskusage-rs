@@ -2,7 +2,7 @@ use clap::Parser;
 
 use crate::style::Style;
 
-/// Disk usage utility for Linux
+/// Disk usage utility for Windows and Linux
 #[derive(Clone, Parser, Debug)]
 #[command(version, about, after_help = "Be careful with enabling too many display options; table *will* wraparound")]
 pub(crate) struct Arguments {
